@@ -47,7 +47,9 @@ module.exports = (_ => {
 		stop() {}
 	} : (([Plugin, BDFDB]) => {
         var firedEvents = [];
-        var active = "latin";
+		var active = "latin";
+		var settings = {};
+		var uInterval;
 
         return class NamakoSitelen extends Plugin {
             onStart() {
@@ -55,11 +57,23 @@ module.exports = (_ => {
                 sheet.insertRule("@font-face {font-family: 'sitelen pona pona'; src: url('https://hydrogeno.us/fonts/sitelen-pona-pona.otf');}", sheet.cssRules.length); //Theres a much better way of doing this
                 sheet.insertRule("@font-face {font-family: 'sitelen telo'; src: url('https://hydrogeno.us/fonts/sitelen-telo.otf');}", sheet.cssRules.length);
 
+				settings = BDFDB.DataUtils.load(this, "channels");
+
 				BDFDB.ListenerUtils.add(this, document, "keydown", e => {
 					if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.textareawrapchat, document.activeElement)) {
                         this.onKeyDown(document.activeElement, e.which, "onKeyDown");
                     }
 				});
+
+
+				// let channelArea = document.getElementsByClassName("da-sidebar")[0];
+				// BDFDB.ListenerUtils.add(this, channelArea, "click", e => {
+				// 	console.log(channelArea);
+				// 	setTimeout(this.updateFonts(), 10000); //TODO only run when click event in channel selector
+				// });
+
+				this.updateFonts();
+				uInterval = setInterval(this.updateFonts, 500);
             }
 
             onKeyDown(target, key, name) {
@@ -69,34 +83,57 @@ module.exports = (_ => {
                         let chatform = BDFDB.DOMUtils.getParent(BDFDB.dotCN.chatform, target);
 						if (chatform && chatform.innerText.trim().toLowerCase() == ":sitelen" || chatform.innerText.trim().toLowerCase() == ":telo" || chatform.innerText.trim().toLowerCase() == ":latin") {
                             let instance = BDFDB.ReactUtils.findOwner(chatform, {name:"ChannelTextAreaForm"}) || BDFDB.ReactUtils.findOwner(chatform, {name:"ChannelTextAreaForm", up:true});
-                            if(active == chatform.innerText.trim().toLowerCase() == ":sitelen") {
-                                active = "latin";
+							let cactive = "latin";
+							
+							if(active == chatform.innerText.trim().toLowerCase()) {
+                                cactive = "latin";
                             } else if (chatform.innerText.trim().toLowerCase() == ":sitelen") {
-                                active = "pona";
+                                cactive = "pona";
                             } else if (chatform.innerText.trim().toLowerCase() == ":telo") {
-                                active = "telo";
+                                cactive = "telo";
                             } else {
-                                active = "latin";
+                                cactive = "latin";
                             }
-                            let sheet = window.document.styleSheets[0];
-                            if(active == "pona") {
-                                sheet.insertRule(".da-channelTextArea, .da-message, .da-topic, .da-markup { font-family: 'sitelen pona pona'; font-size: 1.5rem !important;}", sheet.cssRules.length); //TODO program this not in a terrible way
-                            }
-                            if(active == "telo") {
-                                sheet.insertRule(".da-channelTextArea, .da-message, .da-topic, .da-markup { font-family: 'sitelen telo'; font-size: inherit !important;}", sheet.cssRules.length);
-                            }
-                            if(active == "latin") {
-                                sheet.insertRule(".da-channelTextArea, .da-message, .da-topic, .da-markup { font-family: inherit; font-size: inherit !important;}", sheet.cssRules.length);
-                            }
+							
+							let channel = BDFDB.LibraryModules.ChannelStore.getChannel(BDFDB.LibraryModules.LastChannelStore.getChannelId());
+							settings[channel.id] = cactive;
+							
+							this.updateFonts();
 
 							if (instance) instance.setState({textValue:"", richValue:BDFDB.LibraryModules.SlateUtils.deserialize("")});
 						}
 					}
 					BDFDB.TimeUtils.timeout(_ => {BDFDB.ArrayUtils.remove(firedEvents, name, true)});
 				}
-            }
+			}
+			
+			updateFonts() {
+				let channel = BDFDB.LibraryModules.ChannelStore.getChannel(BDFDB.LibraryModules.LastChannelStore.getChannelId());
+				let cactive = "latin";
+
+				if(channel.id in settings) {
+					cactive = settings[channel.id];
+				}
+
+				let sheet = window.document.styleSheets[0];
+				if(cactive != active) {
+					if(cactive == "pona") { //This is a poor way of doing this, every time the script changes the stylesheet grows
+						sheet.insertRule(".da-channelTextArea, .da-message, .da-topic, .da-markup { font-family: 'sitelen pona pona'; font-size: 1.5rem !important;}", sheet.cssRules.length); //TODO program this not in a terrible way
+					}
+					if(cactive == "telo") {
+						sheet.insertRule(".da-channelTextArea, .da-message, .da-topic, .da-markup { font-family: 'sitelen telo'; font-size: inherit !important;}", sheet.cssRules.length);
+					}
+					if(cactive == "latin") {
+						sheet.insertRule(".da-channelTextArea, .da-message, .da-topic, .da-markup { font-family: inherit; font-size: inherit !important;}", sheet.cssRules.length);
+					}
+				}
+
+				active = cactive;
+			}
             
             onStop() {
+				BDFDB.DataUtils.save(settings, this, "channels")
+				clearInterval(uInterval);
 				return;
 			}
         };
