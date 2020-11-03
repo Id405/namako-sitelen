@@ -12,3 +12,4 @@ TODO:
  - Remember rendering preferences per channel.
  - Change placeholder text in message box to toki pona when not rendering in latin or make it always render in latin
  - Add option to always render name in latin
+ - In sitelen telo linja sin doesn't render properly because it has to be in uppercase, this causes peoples names to be rendered incorrectly. Somehow solve this.
