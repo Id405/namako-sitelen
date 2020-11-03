@@ -1,8 +1,9 @@
 /**
  * @name namako-sitelen
  * @author 8o7wer#4686
- * @version 0.1.0
+ * @version 0.2.0
  * @description Renders messages in Sitelen Pona
+ * @siyrce https://raw.githubusercontent.com/Id405/namako-sitelen/main/NamakoSitelen.plugin.js
 */
 
 //A lot of this code kinda sucks :/
@@ -12,7 +13,7 @@ module.exports = (_ => {
 		"info": {
 			"name": "namako sitelen",
 			"author": "jan Lili",
-			"version": "0.1.0",
+			"version": "0.2.0",
 			"description": "namako ni li sitelen e sitelen pona anu sitelen telo. Renders discord messages in sitelen pona or sitelen telo"
 		},
 		"changeLog": {
