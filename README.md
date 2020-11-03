@@ -11,3 +11,4 @@ namako sitelen is still under early developement so expect bugs. Also its horrib
 TODO:
  - Remember rendering preferences per channel.
  - Change placeholder text in message box to toki pona when not rendering in latin or make it always render in latin
+ - Add option to always render name in latin
