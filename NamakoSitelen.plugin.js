@@ -3,7 +3,8 @@
  * @author 8o7wer#4686
  * @version 0.2.0
  * @description Renders messages in Sitelen Pona
- * @siyrce https://raw.githubusercontent.com/Id405/namako-sitelen/main/NamakoSitelen.plugin.js
+ * @source https://raw.githubusercontent.com/Id405/namako-sitelen/main/NamakoSitelen.plugin.js
+ * @website https://github.com/Id405/namako-sitelen
 */
 
 //A lot of this code kinda sucks :/
