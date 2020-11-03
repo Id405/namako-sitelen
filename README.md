@@ -1,5 +1,5 @@
 # namako sitelen
-**tenpo ni li pali:**
+**tenpo ni la mi pali e ni:**
 mi sona lili e namako pi ilo BetterDiscord.
 
 namako sitelen li ilo namako tan ilo BetterDiscord. tenpo ni la ona li pali kama taso ona pali. tawa kepeken ona la toki e ":sitelen" tawa sitelen e sitelen pona anu ":telo" tawa sitelen e sitelen telo.
