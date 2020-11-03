@@ -9,7 +9,9 @@ namako sitelen is a plugin for BetterDiscord that allows the rendering of sitele
 namako sitelen is still under early developement so expect bugs. Also its horribly programmed right now.
 
 TODO:
- - Remember rendering preferences per channel.
+ - ~~Remember rendering preferences per channel.~~ DONE but not very well tested
  - Change placeholder text in message box to toki pona when not rendering in latin or make it always render in latin
  - Add option to always render name in latin
  - In sitelen telo linja sin doesn't render properly because it has to be in uppercase, this causes names to be rendered incorrectly. Somehow solve this.
+ - Possibly generate cartouche?
+ - Write font switching code better
