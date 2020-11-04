@@ -14,7 +14,7 @@ module.exports = (_ => {
 		"info": {
 			"name": "namako sitelen",
 			"author": "jan Lili",
-			"version": "0.2.0",
+			"version": "0.2.1",
 			"description": "namako ni li sitelen e sitelen pona anu sitelen telo. Renders discord messages in sitelen pona or sitelen telo"
 		},
 		"changeLog": {
@@ -58,6 +58,7 @@ module.exports = (_ => {
                 let sheet = window.document.styleSheets[0];
                 sheet.insertRule("@font-face {font-family: 'sitelen pona pona'; src: url('https://hydrogeno.us/fonts/sitelen-pona-pona.otf');}", sheet.cssRules.length); //Theres a much better way of doing this
                 sheet.insertRule("@font-face {font-family: 'sitelen telo'; src: url('https://hydrogeno.us/fonts/sitelen-telo.otf');}", sheet.cssRules.length);
+				sheet.insertRule(".da-username, .da-timestamp, .da-placeholder {font-family: Whitney,Helvetica Neue,Helvetica,Arial,sans-serif;}")
 
 				settings = BDFDB.DataUtils.load(this, "channels");
 
@@ -95,7 +96,7 @@ module.exports = (_ => {
                                 cactive = "telo";
                             } else {
                                 cactive = "latin";
-                            }
+							}
 							
 							let channel = BDFDB.LibraryModules.ChannelStore.getChannel(BDFDB.LibraryModules.LastChannelStore.getChannelId());
 							settings[channel.id] = cactive;
